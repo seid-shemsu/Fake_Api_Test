@@ -24,6 +24,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginBtn.setOnClickListener {
+            if (binding.usernameField.text.toString().isEmpty()) {
+                binding.usernameField.error = "Required Field"
+                return@setOnClickListener
+            }
+            if (binding.passwordField.text.toString().isEmpty()) {
+                binding.passwordField.error = "Required Field"
+                return@setOnClickListener
+            }
             val user = binding.usernameField.text.toString()
             val pass = binding.passwordField.text.toString()
             viewModel.login(user, pass)
@@ -48,6 +56,8 @@ class LoginActivity : AppCompatActivity() {
                 is AuthViewModel.UiState.Error -> {
                     binding.loginBtn.isEnabled = true
                     binding.progress.isVisible = false
+                    binding.usernameField.isEnabled = true
+                    binding.passwordField.isEnabled = true
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
                 is AuthViewModel.UiState.Idle -> {

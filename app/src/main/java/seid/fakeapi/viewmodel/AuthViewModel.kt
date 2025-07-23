@@ -28,7 +28,8 @@ class AuthViewModel @Inject constructor(
                 sharedPreferences.edit().putString("token", token).apply()
                 _uiState.value = UiState.Success
             } catch (e: Exception) {
-                _uiState.value = UiState.Error("Login failed: ${e.message}")
+                e.printStackTrace()
+                _uiState.value = UiState.Error("Login failed")
             }
         }
     }
